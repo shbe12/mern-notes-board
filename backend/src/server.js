@@ -11,8 +11,17 @@ const PORT = process.env.PORT || 5001;
 
 connectDB();
 // Endpoint is a combination of URL and HTTP method, that lets client interact with a resource.
-app.use("/api/notes", notesRoutes);
 
+//middleware
+app.use(express.json());
+
+app.use((req,res,next) => {
+  // console.log("We just got a new request");
+  console.log(`Req method is ${req.method} & Req URL is ${req.url}`);
+  next();
+});
+
+app.use("/api/notes", notesRoutes);
 
 app.listen(PORT, () => {
   console.log("Server is running on port:", PORT);
