@@ -13,13 +13,14 @@ connectDB();
 // Endpoint is a combination of URL and HTTP method, that lets client interact with a resource.
 
 //middleware
-app.use(express.json());
-
-app.use((req,res,next) => {
-  // console.log("We just got a new request");
-  console.log(`Req method is ${req.method} & Req URL is ${req.url}`);
-  next();
-});
+app.use(express.json()); // this middleware parse JSON bodies: req.body
+app.use(rateLimiter) // this middleware will limit the number of requests a client can make to the server in a given time frame
+// a simple custom middleware to log the request method and URL
+// app.use((req,res,next) => {
+//   // console.log("We just got a new request");
+//   console.log(`Req method is ${req.method} & Req URL is ${req.url}`);
+//   next();
+// });
 
 app.use("/api/notes", notesRoutes);
 
