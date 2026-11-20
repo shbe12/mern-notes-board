@@ -9,8 +9,6 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-
-connectDB();
 // Endpoint is a combination of URL and HTTP method, that lets client interact with a resource.
 
 //middleware
@@ -25,6 +23,8 @@ app.use(rateLimiter) // this middleware will limit the number of requests a clie
 
 app.use("/api/notes", notesRoutes);
 
-app.listen(PORT, () => {
+connectDB().then(() => {
+  app.listen(PORT, () => {
   console.log("Server is running on port:", PORT);
+  });
 });
